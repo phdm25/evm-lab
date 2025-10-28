@@ -52,6 +52,9 @@ async function main() {
   const logicV2Address = await logicV2.getAddress();
   console.log("LogicV2 deployed at:", logicV2Address);
 
+  await proxy.transferOwnership(multisig.target);
+  console.log(`✅ Proxy ownership transferred to multisig: ${multisig.target}`);
+
   // === Save addresses ===
   const result = {
     proxy: proxy.target,
@@ -73,7 +76,8 @@ async function main() {
     const artifactPath = path.join(__dirname, `../artifacts/contracts/${name}.sol/${name}.json`);
     const artifact = JSON.parse(fs.readFileSync(artifactPath, "utf8"));
     const abi = { abi: artifact.abi };
-    fs.writeFileSync(path.join(abiDir, `${name}.json`), JSON.stringify(abi, null, 2));
+    const tsContent = `export const ${name}ABI = ${JSON.stringify(abi, null, 2)} as const;`;
+    fs.writeFileSync(path.join(abiDir, `${name}ABI.ts`), tsContent, "utf8");
   }
 
   console.log("✅ ABIs exported to frontend/src/abi/");
