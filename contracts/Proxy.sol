@@ -5,19 +5,31 @@ contract Proxy {
     address public implementation;
     address public owner;
 
+
+
     constructor(address _impl) {
         implementation = _impl;
         owner = msg.sender;
     }
 
-    function upgrade(address _newImpl, bytes calldata _initData) external {
+    modifier onlyOwner() {
         require(msg.sender == owner, "not owner");
+        _;
+    }
+
+    function transferOwnership(address newOwner) external onlyOwner {
+        require(newOwner != address(0), "invalid owner");
+        owner = newOwner;
+    }
+
+    function upgrade(address _newImpl, bytes calldata _initData) external onlyOwner {
         implementation = _newImpl;
 
         // if (_initData.length > 0) {
         //     (bool ok, ) = _newImpl.delegatecall(_initData);
         //     require(ok, "Upgrade init failed");
         // }
+
     }
 
     fallback() external payable {
