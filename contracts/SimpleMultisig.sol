@@ -15,6 +15,7 @@ contract SimpleMultisig {
     uint256 public required;
 
     Tx[] public txs;
+
     mapping(uint256 => mapping(address => bool)) public confirmed;
 
     constructor(address[] memory _owners, uint256 _required) {
@@ -32,8 +33,10 @@ contract SimpleMultisig {
     }
 
     function confirm(uint256 id) external {
+        require(id < txs.length, "invalid tx id");
         require(isOwner[msg.sender], "not owner");
         require(!confirmed[id][msg.sender], "already confirmed");
+
         confirmed[id][msg.sender] = true;
         txs[id].confirms++;
     }
@@ -62,5 +65,9 @@ contract SimpleMultisig {
 
     function getOwners() external view returns (address[] memory) {
         return owners;
+    }
+
+    function isConfirmed(uint256 id, address owner) external view returns (bool) {
+        return confirmed[id][owner];
     }
 }
