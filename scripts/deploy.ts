@@ -75,7 +75,7 @@ async function main() {
   for (const name of contracts) {
     const artifactPath = path.join(__dirname, `../artifacts/contracts/${name}.sol/${name}.json`);
     const artifact = JSON.parse(fs.readFileSync(artifactPath, "utf8"));
-    const abi = { abi: artifact.abi };
+    const abi = artifact.abi ;
     const tsContent = `export const ${name}ABI = ${JSON.stringify(abi, null, 2)} as const;`;
     fs.writeFileSync(path.join(abiDir, `${name}ABI.ts`), tsContent, "utf8");
   }
