@@ -100,15 +100,11 @@ export const  MultisigUpgrade = () =>  {
   return (
     <div className="p-6 mt-8 border rounded-lg space-y-4">
       <h2 className="text-xl font-bold">🔐 Multisig Upgrade Panel</h2>
-      <button
-        onClick={handleSubmitUpgrade}
-        disabled={isPending || executed}
-        className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
-      >
-        Submit Upgrade
-      </button>
+    
 
-      {txCount > 0 && <div className="border-t pt-4">
+      {txCount > 0 
+        ? 
+        <div className="border-t pt-4">
           <p>
             Confirmations:{" "}
             <strong>
@@ -149,7 +145,15 @@ export const  MultisigUpgrade = () =>  {
               })
             }
           </ul>
-        </div>
+        </div> 
+        :  
+        <button
+          onClick={handleSubmitUpgrade}
+          disabled={isPending || executed}
+          className="bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 disabled:bg-gray-400"
+        >
+          Submit Upgrade
+        </button>
       }
 
       {allConfirmed && !executed && (
