@@ -5,17 +5,16 @@ import {
 } from "wagmi";
 
 import deploy from "./deploy.json";
-import LogicV1ABI from "./abi/LogicV1.json";
-import ProxyABI from "./abi/Proxy.json";
-import type { Abi, Address } from "viem";
+import type { Address } from "viem";
 import { SetValueButton } from "./components/SetValueButton";
-import { UpgradeButton } from "./components/UpgradeButton";
+import { MultisigUpgrade } from "./components/MultisigUpgrade";
+import { LogicV1ABI } from "./abi/LogicV1ABI";
 
 export default function App() {
   const { isConnected } = useAccount();
   const { data: value, refetch } = useReadContract({
     address: deploy.proxy as Address,
-    abi: LogicV1ABI.abi,
+    abi: LogicV1ABI,
     functionName: "getValue",
   });
 
@@ -30,15 +29,10 @@ export default function App() {
           <div className="flex flex-col gap-2">
             <SetValueButton
               address={deploy.proxy as Address}
-              abi={LogicV1ABI.abi as Abi}
+              abi={LogicV1ABI}
               refetch={refetch}
               />
-
-            <UpgradeButton
-              proxy={deploy.proxy as Address}
-              newLogic={deploy.logicV2 as Address}
-              abi={ProxyABI.abi as Abi}
-              />
+            <MultisigUpgrade />
           </div>
         </div>
       )}

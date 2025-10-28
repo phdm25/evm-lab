@@ -8,7 +8,7 @@ interface SetValueButtonProps {
   refetch: () => void;
 }
 
-export function SetValueButton({ address, abi, refetch }: SetValueButtonProps) {
+export const SetValueButton = ({ address, abi, refetch }: SetValueButtonProps) => {
   const [value, setValue] = useState("");
   const { writeContract, isPending, isSuccess, error } = useWriteContract();
 

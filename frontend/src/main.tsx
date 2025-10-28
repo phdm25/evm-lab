@@ -5,22 +5,15 @@ import "@rainbow-me/rainbowkit/styles.css";
 import './index.css'
 import {
   RainbowKitProvider,
-  getDefaultConfig,
 } from "@rainbow-me/rainbowkit";
 import {
   WagmiProvider,
 } from "wagmi";
-import { hardhat } from "wagmi/chains";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { DebugInfo } from "./Debug";
+import { config } from "./wagmiConfig";
 
 
-const config = getDefaultConfig({
-  appName: "Upgradeable Proxy dApp",
-  projectId: "YOUR_WALLET_CONNECT_PROJECT_ID", // получи с https://cloud.walletconnect.com
-  chains: [hardhat],
-  ssr: false,
-});
 
 const queryClient = new QueryClient();
 

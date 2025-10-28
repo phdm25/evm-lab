@@ -3,29 +3,40 @@ import {
   useReadContract,
 } from "wagmi";
 import deploy from "./deploy.json";
-import ProxyABI from "./abi/Proxy.json";
-import LogicV1ABI from "./abi/LogicV1.json";
+
 import type { Address } from "viem";
+import { ProxyABI } from "./abi/ProxyABI";
+import { LogicV1ABI } from "./abi/LogicV1ABI";
 
 
 export function DebugInfo() {
     const { data: implementation } = useReadContract({
       address: deploy.proxy as Address,
-      abi: ProxyABI.abi,
+      abi: ProxyABI,
       functionName: "implementation",
     });
   
     const { data: owner } = useReadContract({
       address: deploy.proxy as Address,
-      abi: ProxyABI.abi,
+      abi: ProxyABI,
       functionName: "owner",
     });
   
     const { data: value } = useReadContract({
       address: deploy.proxy as Address,
-      abi: LogicV1ABI.abi,
+      abi: LogicV1ABI,
       functionName: "getValue",
     });
+
+    let versionLabel = "Unknown";
+
+    if (typeof implementation === 'string') {
+      if (implementation.toLowerCase() === deploy.logicV1.toLowerCase()) {
+        versionLabel = "LogicV1 (initial version)";
+      } else if (implementation.toLowerCase() === deploy.logicV2.toLowerCase()) {
+        versionLabel = "LogicV2 (upgraded)";
+      }
+    }
   
     return (
       <div className="mt-8 p-4 border rounded-lg ">
@@ -43,6 +54,9 @@ export function DebugInfo() {
           </li>
           <li>
             <strong>Current value:</strong> {value !== undefined ? String(value) : "—"}
+          </li>
+          <li>
+            <strong>Version:</strong> {versionLabel}
           </li>
         </ul>
       </div>
