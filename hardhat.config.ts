@@ -2,7 +2,7 @@ import hardhatEthers from "@nomicfoundation/hardhat-ethers";
 import { HardhatUserConfig } from "hardhat/types/config";
 import hardhatToolboxMochaEthers from "@nomicfoundation/hardhat-toolbox-mocha-ethers";
 import * as dotenv from "dotenv";
-dotenv.config({ path: "./frontend/.env.local" });
+dotenv.config({ path: "./.env.local" });
 
 const config: HardhatUserConfig = {
   plugins: [hardhatEthers, hardhatToolboxMochaEthers],

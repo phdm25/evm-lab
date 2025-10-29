@@ -31,7 +31,7 @@ export const  MultisigUpgrade = () =>  {
   });
   
   const txCount = Number(txCountData ?? '0n')
-  const txId = txCount ? Number(txCount) - 1 : 0
+  const txId = txCount ? txCount - 1 : 0
   const ownersList = useMemo(() => owners ? [...owners] : [], [owners])
   const confirmations = useOwnerConfirmations(BigInt(txId), ownersList );
 
@@ -99,7 +99,7 @@ export const  MultisigUpgrade = () =>  {
 
   return (
     <div className="p-6 mt-8 border rounded-lg space-y-4">
-      <h2 className="text-xl font-bold">🔐 Multisig Upgrade Panel</h2>
+      <h2 className="text-xl font-bold">Multisig Upgrade Panel</h2>
     
 
       {txCount > 0 
